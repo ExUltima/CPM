@@ -1,0 +1,56 @@
+{
+  "project": {
+    "name": "prog",
+    "type": "exe"
+  },
+  "build": {
+    "*": {
+      "src": [
+        "src/*.cpp"
+      ],
+      "configs": {
+        "release": {
+          "defines": [
+            "NDEBUG"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "name": "bar",
+          "repository": "file://../lib"
+        }
+      ]
+    },
+    "win32": {
+      "toolchain": "msvc",
+      "defines": [
+        "WINDOWS"
+      ],
+      "src": [
+        "src/win32/*.cpp"
+      ],
+      "configs": {
+        "release": {
+          "compiler": "/O2",
+          "linker": "/LTCG"
+        }
+      },
+      "dependencies": [
+        {
+          "name": "bar",
+          "config": "lite"
+        }
+      ]
+    },
+    "unix": {
+      "toolchain": "gcc",
+      "define": [
+        "UNIX"
+      ],
+      "src": [
+        "src/unix/*.cpp"
+      ]
+    }
+  }
+}
