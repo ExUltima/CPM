@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <iostream>
 
+program program::curr;
+
 program::program()
 {
 }
@@ -15,11 +17,9 @@ int program::run(std::vector<std::string> const & args)
 		if (e.option() == "--help") {
 			std::cout << program_options::get_usage_text(args[0]) << std::endl;
 			return EXIT_SUCCESS;
-		} else {
-			std::cerr << "unknown option " << e.option() << std::endl;
 		}
 
-		return EXIT_FAILURE;
+		throw;
 	}
 
 	return EXIT_SUCCESS;
