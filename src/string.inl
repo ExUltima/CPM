@@ -1,9 +1,9 @@
 #include <sstream>
 
-template<class CharT>
-inline std::basic_string<CharT> join(std::vector<std::basic_string<CharT>> const & v, std::basic_string<CharT> const & sep)
+template<class CharT, class Traits, class Alloc>
+inline std::basic_string<CharT, Traits, Alloc> join(std::vector<std::basic_string<CharT, Traits, Alloc>> const & v, std::basic_string<CharT, Traits, Alloc> const & sep)
 {
-	std::basic_stringstream<CharT> s;
+	std::basic_stringstream<CharT, Traits, Alloc> s;
 
 	for (auto it = v.begin();;) {
 		s << *(it++);

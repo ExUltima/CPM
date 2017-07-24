@@ -16,9 +16,11 @@ int main(int argc, char *argv[])
 	std::copy(argv, &argv[argc], std::back_inserter(args));
 
 	try {
-		return program::run(args);
+		program::run(args);
 	} catch (std::exception & e) {
 		std::cerr << std::to_string(e) << std::endl;
 		return EXIT_FAILURE;
 	}
+
+	return EXIT_SUCCESS;
 }

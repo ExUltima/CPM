@@ -5,10 +5,10 @@
 #include <vector>
 
 template<class T>
-T from_string(std::string const & s); // TODO: use the better way to block non-specialized version
+T from_string(std::string const & s);
 
-template<class CharT>
-std::basic_string<CharT> join(std::vector<std::basic_string<CharT>> const & v, std::basic_string<CharT> const & sep);
+template<class CharT, class Traits, class Alloc>
+std::basic_string<CharT, Traits, Alloc> join(std::vector<std::basic_string<CharT, Traits, Alloc>> const & v, std::basic_string<CharT, Traits, Alloc> const & sep);
 
 #include "string.inl"
 

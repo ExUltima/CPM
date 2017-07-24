@@ -3,6 +3,7 @@
 
 #include "program_options.hpp"
 
+#include <experimental/filesystem>
 #include <string>
 #include <vector>
 
@@ -12,13 +13,15 @@ public:
 
 	program & operator=(program const &) = delete;
 
-	static program const & current() { return curr; }
-	static int run(std::vector<std::string> const & args);
+	static program const & current() { return inst; }
+	static void run(std::vector<std::string> const & args);
 
 	program_options const & options() const noexcept { return opts; }
 
 private:
-	static program curr;
+	static program inst;
+
+	bool running;
 
 	program_options opts;
 

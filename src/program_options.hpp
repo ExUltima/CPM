@@ -17,11 +17,10 @@ enum class program_command {
 class program_options final {
 public:
 	static program_command const default_command = program_command::build;
-	static std::experimental::filesystem::path const default_project_file;
 
 	program_command command;
 	std::string command_name;
-	std::experimental::filesystem::path project_file;
+	std::experimental::filesystem::path project_path;
 
 	program_options();
 

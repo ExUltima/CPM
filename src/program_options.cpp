@@ -5,8 +5,6 @@
 
 // program_options
 
-std::experimental::filesystem::path const program_options::default_project_file = "project.json";
-
 program_options::program_options() :
 	command(program_command::build)
 {
@@ -54,7 +52,7 @@ program_options program_options::parse(std::vector<std::string> const & args)
 
 	// project file
 	if (it != args.end()) {
-		opt.project_file = *(it++) / default_project_file;
+		opt.project_path = std::experimental::filesystem::canonical(*(it++));
 
 		if (it != args.end()) {
 			try {
@@ -66,7 +64,7 @@ program_options program_options::parse(std::vector<std::string> const & args)
 			opt.command = default_command;
 		}
 	} else {
-		opt.project_file = std::experimental::filesystem::current_path() / default_project_file;
+		opt.project_path = std::experimental::filesystem::current_path();
 		opt.command = default_command;
 	}
 

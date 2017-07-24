@@ -1,26 +1,46 @@
 #include "program.hpp"
 
-#include <cstdlib>
+#include "project_builder.hpp"
+
 #include <iostream>
+#include <stdexcept>
 
-program program::curr;
+program program::inst;
 
-program::program()
+program::program() :
+	running(false)
 {
 }
 
-int program::run(std::vector<std::string> const & args)
+void program::run(std::vector<std::string> const & args)
 {
+	// check to make sure we don't run into weird
+	// behavior if there is accidentally call into run multiple times
+	if (inst.running) {
+		throw std::logic_error("the program is already running");
+	}
+
+	inst.running = true;
+
+	// parse options
 	try {
-		curr.opts = program_options::parse(args);
+		inst.opts = program_options::parse(args);
 	} catch (bad_program_option & e) {
 		if (e.option() == "--help") {
 			std::cout << program_options::get_usage_text(args[0]) << std::endl;
-			return EXIT_SUCCESS;
+			return;
 		}
 
 		throw;
 	}
 
-	return EXIT_SUCCESS;
+	// execute command
+	switch (inst.opts.command) {
+	case program_command::build:
+		build_project(inst.opts.project_path);
+		break;
+	default:
+		// TODO: find out which exception to throw
+		break;
+	}
 }
