@@ -176,7 +176,7 @@ value json::parse(std::experimental::filesystem::path const & p)
 
 	try {
 		f.open(p);
-	} catch (std::ios_base::failure & e) {
+	} catch (std::ios_base::failure &) {
 		std::stringstream m;
 		m << "failed to open " << p;
 		throw std::runtime_error(m.str());
