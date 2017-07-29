@@ -34,10 +34,12 @@ void program::run(std::vector<std::string> const & args)
 		throw;
 	}
 
+	inst.pconf = json::parse(inst.opts.project_path / "project.json");
+
 	// execute command
 	switch (inst.opts.command) {
 	case program_command::build:
-		build_project(inst.opts.project_path);
+		build_project();
 		break;
 	default:
 		// TODO: find out which exception to throw

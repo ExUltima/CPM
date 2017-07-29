@@ -324,6 +324,16 @@ value::value(value && other) :
 	other.t = value_type::null;
 }
 
+value & value::operator=(value && rhs)
+{
+	t = rhs.t; rhs.t = value_type::null;
+	s = std::move(rhs.s);
+	elems = std::move(rhs.elems);
+	mem = std::move(rhs.mem);
+
+	return *this;
+}
+
 void value::data(std::string const & v)
 {
 	if (t != value_type::boolean && t != value_type::integer && t != value_type::real && t != value_type::string) {

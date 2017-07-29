@@ -28,5 +28,5 @@ std::string std::to_string(exception const & e)
 std::string std::to_string(exception const & e, string const & sep)
 {
 	auto v = ::get_exception_messages(e);
-	return join(v, sep);
+	return join(sep, v.begin(), v.end());
 }

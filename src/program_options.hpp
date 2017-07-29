@@ -16,21 +16,28 @@ enum class program_command {
 
 class program_options final {
 public:
+	// default values
 	static program_command const default_command = program_command::build;
+	static std::string const optional_prefix;
 
+	// options
 	program_command command;
 	std::string command_name;
+	std::string platform;
 	std::experimental::filesystem::path project_path;
 
+	// constructors/destructors
 	program_options();
 
 	static std::string get_usage_text(std::string const & prog);
 	static program_options parse(std::vector<std::string> const & args);
+	static void parse_platform(program_options & o, std::vector<std::string> const & args);
 };
 
 class bad_program_option final : public std::runtime_error {
 public:
 	bad_program_option(std::string const & opt);
+	bad_program_option(char const *prefix, std::string const & opt);
 
 	std::string const & option() const noexcept { return opt; }
 
