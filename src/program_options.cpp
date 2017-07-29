@@ -137,7 +137,7 @@ program_options program_options::parse(std::vector<std::string> const & args)
 		// get arguments
 		i++;
 
-		if (args.end() - i < di->second.args.size()) {
+		if (static_cast<std::size_t>(args.end() - i) < di->second.args.size()) {
 			throw bad_program_option("insufficient argument for ", arg);
 		}
 
