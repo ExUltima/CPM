@@ -26,11 +26,11 @@ struct optional_option_descriptor {
 };
 
 static std::map<std::string, optional_option_descriptor> const optional_options_descriptor = {
-	{"platform", {
-		.description = "set target platform, default is current platform",
-		.parser = program_options::parse_platform,
-		.args = {
-			{.name = "name", .required = true}
+	{"platform", optional_option_descriptor{
+		"set target platform, default is current platform",
+		program_options::parse_platform,
+		{
+			optional_option_argument_descriptor{"name", true}
 		}
 	}}
 };
