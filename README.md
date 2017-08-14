@@ -21,4 +21,5 @@ CPM is stand for C++ Project Manager.
 # Build status
 |Platform|Master                                                                                                                                                            |
 |--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|Linux   |[![Build Status](https://travis-ci.org/ExUltima/CPM.svg?branch=master)](https://travis-ci.org/ExUltima/CPM)                                                       |
 |Windows |[![Build status](https://ci.appveyor.com/api/projects/status/3pnwici25txd1x70/branch/master?svg=true)](https://ci.appveyor.com/project/ExUltima/cpm/branch/master)|
