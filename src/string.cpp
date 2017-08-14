@@ -1,6 +1,7 @@
 #include "string.hpp"
 
 #include <codecvt>
+#include <locale>
 
 std::string std::to_string(wstring const & s)
 {
