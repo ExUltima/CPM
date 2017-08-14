@@ -43,7 +43,7 @@ std::string real_path(std::string const & p)
 {
 #ifdef _WIN32
 	WCHAR buf[MAX_PATH];
-	if (!GetFullPathNameW(to_wstring(s).c_str(), MAX_PATH, buf, nullptr)) {
+	if (!GetFullPathNameW(to_wstring(p).c_str(), MAX_PATH, buf, nullptr)) {
 		throw std::system_error(GetLastError(), std::system_category());
 	}
 	return std::to_string(buf);
