@@ -13,10 +13,14 @@ std::basic_string<CharT> join(CharT const * sep, Iterator first, Iterator last);
 template<class CharT, class Traits, class Alloc, class Iterator>
 std::basic_string<CharT, Traits, Alloc> join(std::basic_string<CharT, Traits, Alloc> const & sep, Iterator first, Iterator last);
 
+std::wstring to_wstring(std::string const & s);
+
 template<class Iterator>
 std::basic_string<typename Iterator::value_type> trim(Iterator first, Iterator last);
 
 namespace std {
+
+std::string to_string(std::wstring const & s);
 
 template<class Iterator>
 basic_string<typename Iterator::value_type> toupper(Iterator first, Iterator last);

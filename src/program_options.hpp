@@ -3,7 +3,6 @@
 
 #include "string.hpp"
 
-#include <experimental/filesystem>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -24,7 +23,7 @@ public:
 	program_command command;
 	std::string command_name;
 	std::string platform;
-	std::experimental::filesystem::path project_path;
+	std::string project_path;
 
 	// constructors/destructors
 	program_options();

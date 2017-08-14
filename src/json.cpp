@@ -168,7 +168,7 @@ value json::parse(std::string const & str)
 	return parse(s);
 }
 
-value json::parse(std::experimental::filesystem::path const & p)
+value json::parse_file(std::string const & p)
 {
 	std::ifstream f;
 

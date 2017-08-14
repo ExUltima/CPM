@@ -1,5 +1,6 @@
 #include "program.hpp"
 
+#include "filesystem.hpp"
 #include "project_builder.hpp"
 
 #include <iostream>
@@ -34,7 +35,7 @@ void program::run(std::vector<std::string> const & args)
 		throw;
 	}
 
-	inst.pconf = json::parse(inst.opts.project_path / "project.json");
+	inst.pconf = json::parse_file(fs::combine_path(inst.opts.project_path, "project.json"));
 
 	// execute command
 	switch (inst.opts.command) {

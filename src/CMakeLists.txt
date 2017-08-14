@@ -1,6 +1,8 @@
 add_executable (cpm
 	exception.cpp
 	exception.hpp
+	filesystem.cpp
+	filesystem.hpp
 	json.cpp
 	json.hpp
 	main.cpp
@@ -15,7 +17,3 @@ add_executable (cpm
 	string.hpp
 	string.inl
 )
-
-if (NOT MSVC)
-	target_link_libraries (cpm stdc++fs)
-endif ()

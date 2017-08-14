@@ -1,5 +1,6 @@
 #include "program_options.hpp"
 
+#include "filesystem.hpp"
 #include "string.hpp"
 
 #include <algorithm>
@@ -150,7 +151,7 @@ program_options program_options::parse(std::vector<std::string> const & args)
 
 	// project file
 	if (i != args.end()) {
-		opt.project_path = std::experimental::filesystem::canonical(*(i++));
+		opt.project_path = fs::real_path(*(i++));
 
 		if (i != args.end()) {
 			try {
@@ -162,7 +163,7 @@ program_options program_options::parse(std::vector<std::string> const & args)
 			opt.command = default_command;
 		}
 	} else {
-		opt.project_path = std::experimental::filesystem::current_path();
+		opt.project_path = fs::current_path();
 		opt.command = default_command;
 	}
 

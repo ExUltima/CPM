@@ -2,7 +2,6 @@
 #define JSON_HPP_INCLUDED
 
 #include <cstdlib>
-#include <experimental/filesystem>
 #include <istream>
 #include <memory>
 #include <stdexcept>
@@ -122,7 +121,7 @@ private:
 // functions
 value parse(std::istream & s);
 value parse(std::string const & str);
-value parse(std::experimental::filesystem::path const & p);
+value parse_file(std::string const & p);
 
 }
 
