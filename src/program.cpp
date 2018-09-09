@@ -1,6 +1,8 @@
 #include "program.hpp"
 
 #include "filesystem.hpp"
+#include "json/errors.hpp"
+#include "json/parser.hpp"
 #include "project_builder.hpp"
 
 #include <iostream>
@@ -35,7 +37,15 @@ void program::run(std::vector<std::string> const & args)
 		throw;
 	}
 
-	inst.pconf = json::parse_file(fs::combine_path(inst.opts.project_path, "project.json"));
+	// parse project configuration
+	auto project = fs::combine_path(inst.opts.project_path, "project.json");
+
+	try {
+		inst.pconf = json_parse_file(project);
+	} catch (bad_json &e) {
+		auto msg = project + ":" + std::to_string(e.line()) + ":" + std::to_string(e.column()) + ": " + e.what();
+		throw std::runtime_error(msg);
+	}
 
 	// execute command
 	switch (inst.opts.command) {

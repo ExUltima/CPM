@@ -1,7 +1,7 @@
 #ifndef PROGRAM_HPP_INCLUDED
 #define PROGRAM_HPP_INCLUDED
 
-#include "json.hpp"
+#include "json/value.hpp"
 #include "program_options.hpp"
 
 #include <experimental/filesystem>
@@ -25,7 +25,7 @@ private:
 	bool running;
 
 	program_options opts;
-	json::value pconf;
+	json_value pconf;
 
 	program();
 };

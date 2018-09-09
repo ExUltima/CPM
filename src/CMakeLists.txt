@@ -3,8 +3,14 @@ add_executable (cpm
 	exception.hpp
 	filesystem.cpp
 	filesystem.hpp
-	json.cpp
-	json.hpp
+	json/errors.cpp
+	json/errors.hpp
+	json/parser.cpp
+	json/parser.hpp
+	json/tokenizer.cpp
+	json/tokenizer.hpp
+	json/value.cpp
+	json/value.hpp
 	main.cpp
 	program_options.cpp
 	program_options.hpp
