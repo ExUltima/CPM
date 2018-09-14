@@ -1,0 +1,17 @@
+{
+  "project": {
+    "name": "exe-debug-release"
+  },
+  "configurations": {
+    "default": {
+      "type": "exe",
+      "sources": [
+        "src/*.cpp"
+      ]
+    },
+    "debug": {
+      "extends": "default",
+      "optimization": "debug"
+    }
+  }
+}

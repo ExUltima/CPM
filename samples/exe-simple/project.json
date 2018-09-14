@@ -1,0 +1,13 @@
+{
+  "project": {
+    "name": "exe-simple"
+  },
+  "configurations": {
+    "default": {
+      "type": "exe",
+      "sources": [
+        "src/*.cpp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "project": {
+    "name": "dll-simple"
+  },
+  "configurations": {
+    "default": {
+      "type": "dll",
+      "defines": [
+        {
+          "value": "LIBRARY_BUILD_DLL",
+          "type": "private"
+        }
+      ],
+      "includes": [
+        "include"
+      ],
+      "sources": [
+        "src/*.cpp"
+      ]
+    }
+  }
+}
