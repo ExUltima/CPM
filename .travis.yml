@@ -8,9 +8,9 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-      env:
-         - CC=gcc-5
-         - CXX=g++-5
+      before_install:
+        - export CC=gcc-5
+        - export CXX=g++-5
     - os: osx
 script:
   - ./autogen.sh && ./configure && make
