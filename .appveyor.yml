@@ -6,12 +6,13 @@ image: Visual Studio 2017
 init:
   - git config --global core.autocrlf input
 clone_depth: 1
+environment:
+  matrix:
+    - vcvars: C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat
+    - vcvars: C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat
 matrix:
   fast_finish: true
-  allow_failures:
-    - platform: x86
-      before_build: call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
-    - platform: x64
-      before_build: call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+install:
+  - call "%vcvars%"
 build_script:
   - nmake -f Makefile.mak
