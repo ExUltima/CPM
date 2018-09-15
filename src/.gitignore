@@ -1,4 +1,6 @@
-/CMakeFiles/
+*.o
+.deps/
+.dirstamp
 /Makefile
-/cmake_install.cmake
+/Makefile.in
 /cpm

@@ -1,11 +1,11 @@
-# Project description
-CPM is a cross-platform build system for solving C++ building complexity,
+# Project Description
+CPM is a modern cross-platform build system for solving C++ building complexity,
 such as difference toolchain on each platform, dependency management and so on.
 
 # Build status
 |Platform|Master                                                                                                                                                            |
 |--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|Linux   |[![Build Status](https://travis-ci.org/ExUltima/CPM.svg?branch=master)](https://travis-ci.org/ExUltima/CPM)                                                       |
+|Linux   |[![Build Status](https://travis-ci.org/ultimaweapon/cpm.svg?branch=master)](https://travis-ci.org/ultimaweapon/cpm)                                               |
 |Windows |[![Build status](https://ci.appveyor.com/api/projects/status/3pnwici25txd1x70/branch/master?svg=true)](https://ci.appveyor.com/project/ExUltima/cpm/branch/master)|
 
 # Motivation
@@ -20,7 +20,7 @@ still no anything like NuGet or Go tools. That why I started this project.
 * Supports multiple toolchains.
 * Easy to manage dependencies.
 * Multiple build's configurations.
- 
+
 # Naming
 CPM is stand for C++ Project Manager.
 
