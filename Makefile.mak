@@ -1,9 +1,9 @@
 all:
 	cd src
-	$(MAKE)
+	$(MAKE) -f Makefile.mak
 	cd ..
 
 clean:
 	cd src
-	$(MAKE) clean
+	$(MAKE) -f Makefile.mak clean
 	cd ..
