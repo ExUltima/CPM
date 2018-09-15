@@ -1,0 +1,13 @@
+version: 0.1.{build}
+branches:
+  only:
+    - master
+image: Visual Studio 2017
+init:
+  - git config --global core.autocrlf input
+clone_depth: 1
+platform:
+  - x86
+  - x64
+build_script:
+  - nmake -f Makefile.mak
