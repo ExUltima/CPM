@@ -1,7 +1,6 @@
 #ifndef JSON_VALUE_HPP_INCLUDED
 #define JSON_VALUE_HPP_INCLUDED
 
-#include <cinttypes>
 #include <cstddef>
 #include <stdexcept>
 #include <string>
@@ -33,7 +32,7 @@ public:
 	json_value(bool v);
 	json_value(std::string const &v);
 	json_value(std::string &&v);
-	json_value(std::intmax_t v);
+	json_value(long v);
 	json_value(double v);
 	json_value(json_value const &other);
 	json_value(json_value &&other) noexcept;
@@ -46,7 +45,7 @@ public:
 	json_value &operator=(bool v);
 	json_value &operator=(std::string const &v);
 	json_value &operator=(std::string &&v);
-	json_value &operator=(std::intmax_t v);
+	json_value &operator=(long v);
 	json_value &operator=(double v);
 	json_value &operator=(json_value const &rhs);
 	json_value &operator=(json_value &&rhs) noexcept;
@@ -112,13 +111,13 @@ inline std::string const &json_value::value<std::string>() const
 }
 
 template<>
-inline std::intmax_t const &json_value::value<std::intmax_t>() const
+inline std::intmax_t const &json_value::value<long>() const
 {
 	if (t != json_type::integer) {
 		throw std::logic_error("the current value is not an integer");
 	}
 
-	return *reinterpret_cast<std::intmax_t *>(v);
+	return *reinterpret_cast<long *>(v);
 }
 
 template<>
@@ -156,9 +155,9 @@ inline std::string &json_value::value<std::string>()
 }
 
 template<>
-inline std::intmax_t &json_value::value<std::intmax_t>()
+inline std::intmax_t &json_value::value<long>()
 {
-	return const_cast<std::intmax_t &>(const_cast<json_value const *>(this)->value<std::intmax_t>());
+	return const_cast<long &>(const_cast<json_value const *>(this)->value<long>());
 }
 
 template<>

@@ -50,8 +50,8 @@ json_value::json_value(std::string &&v) :
 {
 }
 
-json_value::json_value(std::intmax_t v) :
-	v(new std::intmax_t(v)),
+json_value::json_value(long v) :
+	v(new long(v)),
 	t(json_type::integer)
 {
 }
@@ -150,11 +150,11 @@ json_value &json_value::operator=(std::string &&v)
 	return *this;
 }
 
-json_value &json_value::operator=(std::intmax_t v)
+json_value &json_value::operator=(long v)
 {
 	clear();
 
-	this->v = new std::intmax_t(v);
+	this->v = new long(v);
 	this->t = json_type::integer;
 
 	return *this;
@@ -190,7 +190,7 @@ json_value &json_value::operator=(json_value const &rhs)
 		this->v = new std::string(rhs.value<std::string>());
 		break;
 	case json_type::integer:
-		this->v = new std::intmax_t(rhs.value<std::intmax_t>());
+		this->v = new long(rhs.value<long>());
 		break;
 	case json_type::real:
 		this->v = new double(rhs.value<double>());
@@ -283,7 +283,7 @@ void json_value::clear()
 		delete reinterpret_cast<std::string *>(v);
 		break;
 	case json_type::integer:
-		delete reinterpret_cast<std::intmax_t *>(v);
+		delete reinterpret_cast<long *>(v);
 		break;
 	case json_type::real:
 		delete reinterpret_cast<double *>(v);

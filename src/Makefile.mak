@@ -1,4 +1,5 @@
 OUTPUT = cpm.exe
+CPPFLAGS = /EHsc
 SOURCES = \
 	json\errors.cpp \
 	json\parser.cpp \

@@ -2,6 +2,7 @@
 #include "errors.hpp"
 
 #include <cctype>
+#include <locale>
 #include <sstream>
 #include <stdexcept>
 
