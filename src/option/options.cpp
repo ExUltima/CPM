@@ -21,6 +21,13 @@ program_options::program_options() :
 	command(program_command::build),
 	project_path(fs::current_path())
 {
+#ifdef _WIN32
+	toolchain = ::toolchain::msvc;
+#elif defined(__APPLE__)
+	toolchain = ::toolchain::clang;
+#else
+	toolchain = ::toolchain::gcc;
+#endif
 }
 
 std::string program_options::get_usage_text(std::string const &prog)

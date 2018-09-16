@@ -2,6 +2,7 @@
 #define OPTION_OPTIONS_HPP_INCLUDED
 
 #include "commands.hpp"
+#include "../toolchain/identifiers.hpp"
 
 #include <string>
 #include <vector>
@@ -18,8 +19,8 @@ public:
 
 	std::string program;
 	program_command command;
-	std::string platform;
 	std::string project_path;
+	::toolchain toolchain;
 };
 
 #endif // OPTION_OPTIONS_HPP_INCLUDED

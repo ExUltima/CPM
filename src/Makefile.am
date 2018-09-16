@@ -28,4 +28,6 @@ cpm_SOURCES = \
 	project_builder.hpp \
 	string.cpp \
 	string.hpp \
-	string.inl
+	string.inl \
+	toolchain/identifiers.cpp \
+	toolchain/identifiers.hpp

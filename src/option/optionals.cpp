@@ -1,6 +1,7 @@
 #include "optionals.hpp"
 #include "../filesystem.hpp"
 #include "../string.hpp"
+#include "../toolchain/identifiers.hpp"
 
 #include <algorithm>
 #include <exception>
@@ -43,11 +44,6 @@ std::vector<optional_option_usage> get_optional_option_usages(std::string const 
 	return usages;
 }
 
-static void parse_platform(program_options &opt, std::vector<std::string> const &args)
-{
-	opt.platform = args[0];
-}
-
 static void parse_project(program_options &opt, std::vector<std::string> const &args)
 {
 	try {
@@ -57,19 +53,28 @@ static void parse_project(program_options &opt, std::vector<std::string> const &
 	}
 }
 
+static void parse_toolchain(program_options &opt, std::vector<std::string> const &args)
+{
+	try {
+		opt.toolchain = from_string<toolchain>(args[0]);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("failed to set toolchain to " + args[0]));
+	}
+}
+
 std::map<std::string, optional_option_descriptor> const optional_option_descriptors = {
-	{"platform", optional_option_descriptor{
-		"set target platform, default is current platform",
-		parse_platform,
-		{
-			optional_option_argument_descriptor{"name", true}
-		}
-	}},
 	{"project", optional_option_descriptor{
 		"root directory of the project, default is current directory",
 		parse_project,
 		{
 			optional_option_argument_descriptor{"path", true}
+		}
+	}},
+	{"toolchain", optional_option_descriptor{
+		"toolchain to use, default is toolchain native to current platform",
+		parse_toolchain,
+		{
+			optional_option_argument_descriptor{"name", true}
 		}
 	}}
 };

@@ -9,6 +9,7 @@ SOURCES = \
 	option\errors.cpp \
 	option\optionals.cpp \
 	option\options.cpp \
+	toolchain\identifiers.cpp \
 	exception.cpp \
 	filesystem.cpp \
 	main.cpp \
