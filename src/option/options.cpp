@@ -103,14 +103,14 @@ program_options program_options::parse(std::vector<std::string> const &args)
 		// find the descriptor for argument
 		auto di = optional_options_descriptor.find(arg.substr(2));
 		if (di == optional_options_descriptor.end()) {
-			throw bad_program_option(arg);
+			throw bad_program_option("unknown option " + arg, arg);
 		}
 
 		// get arguments
 		i++;
 
 		if (static_cast<std::size_t>(args.end() - i) < di->second.args.size()) {
-			throw bad_program_option("insufficient argument for ", arg);
+			throw bad_program_option("insufficient argument for " + arg, arg);
 		}
 
 		std::vector<std::string> args(i, i + di->second.args.size());
