@@ -20,4 +20,7 @@ clean:
 	del $(OUTPUT)
 
 $(OUTPUT): $(SOURCES:.cpp=.obj)
-	LINK /OUT:"$@" $**
+	LINK /OUT:$@ $**
+
+.cpp.obj:
+	$(CPP) $(CPPFLAGS) /c /Fo$@ $<
