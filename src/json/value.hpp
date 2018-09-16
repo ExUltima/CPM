@@ -111,7 +111,7 @@ inline std::string const &json_value::value<std::string>() const
 }
 
 template<>
-inline std::intmax_t const &json_value::value<long>() const
+inline long const &json_value::value<long>() const
 {
 	if (t != json_type::integer) {
 		throw std::logic_error("the current value is not an integer");
@@ -155,7 +155,7 @@ inline std::string &json_value::value<std::string>()
 }
 
 template<>
-inline std::intmax_t &json_value::value<long>()
+inline long &json_value::value<long>()
 {
 	return const_cast<long &>(const_cast<json_value const *>(this)->value<long>());
 }
