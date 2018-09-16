@@ -14,9 +14,12 @@ cpm_SOURCES = \
 	json/value.cpp \
 	json/value.hpp \
 	main.cpp \
-	program_options.cpp \
-	program_options.hpp \
-	program_options.inl \
+	option/commands.cpp \
+	option/commands.hpp \
+	option/errors.cpp \
+	option/errors.hpp \
+	option/options.cpp \
+	option/options.hpp \
 	program.cpp \
 	program.hpp \
 	project_builder.cpp \

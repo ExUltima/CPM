@@ -3,6 +3,7 @@
 #include "filesystem.hpp"
 #include "json/errors.hpp"
 #include "json/parser.hpp"
+#include "option/errors.hpp"
 #include "project_builder.hpp"
 
 #include <iostream>

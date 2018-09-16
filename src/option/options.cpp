@@ -1,19 +1,21 @@
-#include "program_options.hpp"
-
-#include "filesystem.hpp"
-#include "string.hpp"
+#include "options.hpp"
+#include "errors.hpp"
+#include "../filesystem.hpp"
+#include "../string.hpp"
 
 #include <algorithm>
+#include <exception>
 #include <functional>
 #include <iomanip>
+#include <ios>
 #include <iterator>
 #include <map>
+#include <ostream>
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
-
-// optional options
 
 struct optional_option_argument_descriptor {
 	std::string name;
@@ -26,6 +28,8 @@ struct optional_option_descriptor {
 	std::vector<optional_option_argument_descriptor> args;
 };
 
+std::string const program_options::optional_prefix = "--";
+
 static std::map<std::string, optional_option_descriptor> const optional_options_descriptor = {
 	{"platform", optional_option_descriptor{
 		"set target platform, default is current platform",
@@ -36,47 +40,14 @@ static std::map<std::string, optional_option_descriptor> const optional_options_
 	}}
 };
 
-static std::vector<std::pair<std::string, std::string>> get_optional_option_usage()
-{
-	std::vector<std::pair<std::string, std::string>> usages;
-
-	for (auto & e : optional_options_descriptor) {
-		auto & name = e.first;
-		auto & desc = e.second;
-		auto & args = desc.args;
-		std::stringstream usage;
-
-		// option name
-		usage << program_options::optional_prefix << name;
-
-		// option's arguments
-		std::vector<std::string> args_name;
-		std::transform(args.begin(), args.end(), std::back_inserter(args_name), [](optional_option_argument_descriptor const & arg)
-		{
-			auto name = arg.required ? arg.name : "[" + arg.name + "]";
-			return std::toupper(name.begin(), name.end());
-		});
-
-		if (args_name.size()) {
-			usage << " " << join(" ", args_name.begin(), args_name.end());
-		}
-
-		usages.push_back(std::make_pair(usage.str(), desc.description));
-	}
-
-	return usages;
-}
-
-// program_options
-
-std::string const program_options::optional_prefix = "--";
+static std::vector<std::pair<std::string, std::string>> get_optional_option_usage();
 
 program_options::program_options() :
 	command(program_command::build)
 {
 }
 
-std::string program_options::get_usage_text(std::string const & prog)
+std::string program_options::get_usage_text(std::string const &prog)
 {
 	std::stringstream buf;
 
@@ -99,7 +70,7 @@ std::string program_options::get_usage_text(std::string const & prog)
 		buf << std::endl;
 		buf << "Available options:" << std::endl;
 
-		for (auto & p : opts_usage) {
+		for (auto &p : opts_usage) {
 			buf << std::setw(30) << p.first << p.second << std::endl;
 		}
 	}
@@ -108,7 +79,7 @@ std::string program_options::get_usage_text(std::string const & prog)
 	return trim(s.begin(), s.end());
 }
 
-program_options program_options::parse(std::vector<std::string> const & args)
+program_options program_options::parse(std::vector<std::string> const &args)
 {
 	if (!args.size()) {
 		throw std::invalid_argument("insufficient program's arguments");
@@ -122,7 +93,7 @@ program_options program_options::parse(std::vector<std::string> const & args)
 	std::vector<std::string>::const_iterator i;
 
 	for (i = args.begin() + 1; i != args.end();) {
-		auto & arg = *i;
+		auto &arg = *i;
 
 		// check if it is optional argument
 		if (arg.compare(0, 2, optional_prefix)) {
@@ -175,27 +146,34 @@ void program_options::parse_platform(program_options & o, std::vector<std::strin
 	o.platform = args[0];
 }
 
-// bad_program_option
-
-bad_program_option::bad_program_option(std::string const & opt) :
-	bad_program_option("unknown option ", opt)
+static std::vector<std::pair<std::string, std::string>> get_optional_option_usage()
 {
-}
+	std::vector<std::pair<std::string, std::string>> usages;
 
-bad_program_option::bad_program_option(char const *prefix, std::string const & opt) :
-	runtime_error(prefix + opt),
-	opt(opt)
-{
-}
+	for (auto &e : optional_options_descriptor) {
+		auto &name = e.first;
+		auto &desc = e.second;
+		auto &args = desc.args;
+		std::stringstream usage;
 
-// functions
+		// option name
+		usage << program_options::optional_prefix << name;
 
-std::string std::to_string(::program_command c)
-{
-	switch (c) {
-	case ::program_command::build:
-		return "build";
-	default:
-		throw std::invalid_argument("command is not valid");
+		// option's arguments
+		std::vector<std::string> args_name;
+
+		std::transform(args.begin(), args.end(), std::back_inserter(args_name), [](optional_option_argument_descriptor const &arg)
+		{
+			auto name = arg.required ? arg.name : "[" + arg.name + "]";
+			return std::toupper(name.begin(), name.end());
+		});
+
+		if (args_name.size()) {
+			usage << " " << join(" ", args_name.begin(), args_name.end());
+		}
+
+		usages.push_back(std::make_pair(usage.str(), desc.description));
 	}
+
+	return usages;
 }

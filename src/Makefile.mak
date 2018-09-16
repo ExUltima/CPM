@@ -5,10 +5,12 @@ SOURCES = \
 	json\parser.cpp \
 	json\tokenizer.cpp \
 	json\value.cpp \
+	option\commands.cpp \
+	option\errors.cpp \
+	option\options.cpp \
 	exception.cpp \
 	filesystem.cpp \
 	main.cpp \
-	program_options.cpp \
 	program.cpp \
 	project_builder.cpp \
 	string.cpp
