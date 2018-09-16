@@ -1,9 +1,12 @@
 #include "optionals.hpp"
+#include "../filesystem.hpp"
 #include "../string.hpp"
 
 #include <algorithm>
+#include <exception>
 #include <iterator>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -45,12 +48,28 @@ static void parse_platform(program_options &opt, std::vector<std::string> const 
 	opt.platform = args[0];
 }
 
+static void parse_project(program_options &opt, std::vector<std::string> const &args)
+{
+	try {
+		opt.project_path = fs::real_path(args[0]);
+	} catch (...) {
+		std::throw_with_nested(std::runtime_error("failed to set project directory to " + args[0]));
+	}
+}
+
 std::map<std::string, optional_option_descriptor> const optional_option_descriptors = {
 	{"platform", optional_option_descriptor{
 		"set target platform, default is current platform",
 		parse_platform,
 		{
 			optional_option_argument_descriptor{"name", true}
+		}
+	}},
+	{"project", optional_option_descriptor{
+		"root directory of the project, default is current directory",
+		parse_project,
+		{
+			optional_option_argument_descriptor{"path", true}
 		}
 	}}
 };
