@@ -7,6 +7,7 @@ SOURCES = \
 	json\value.cpp \
 	option\commands.cpp \
 	option\errors.cpp \
+	option\optionals.cpp \
 	option\options.cpp \
 	exception.cpp \
 	filesystem.cpp \

@@ -1,46 +1,21 @@
 #include "options.hpp"
+#include "commands.hpp"
 #include "errors.hpp"
+#include "optionals.hpp"
 #include "../filesystem.hpp"
 #include "../string.hpp"
 
-#include <algorithm>
+#include <cstddef>
 #include <exception>
-#include <functional>
 #include <iomanip>
 #include <ios>
-#include <iterator>
-#include <map>
 #include <ostream>
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include <utility>
 #include <vector>
 
-struct optional_option_argument_descriptor {
-	std::string name;
-	bool required;
-};
-
-struct optional_option_descriptor {
-	std::string description;
-	std::function<void(program_options &, std::vector<std::string> const &)> parser;
-	std::vector<optional_option_argument_descriptor> args;
-};
-
 std::string const program_options::optional_prefix = "--";
-
-static std::map<std::string, optional_option_descriptor> const optional_options_descriptor = {
-	{"platform", optional_option_descriptor{
-		"set target platform, default is current platform",
-		program_options::parse_platform,
-		{
-			optional_option_argument_descriptor{"name", true}
-		}
-	}}
-};
-
-static std::vector<std::pair<std::string, std::string>> get_optional_option_usage();
 
 program_options::program_options() :
 	command(program_command::build)
@@ -63,15 +38,15 @@ std::string program_options::get_usage_text(std::string const &prog)
 	buf << std::setw(30) << "ARG" << "argument for the command";
 
 	// optional option's usage
-	auto opts_usage = get_optional_option_usage();
+	auto optionals = get_optional_option_usages(optional_prefix);
 
-	if (opts_usage.size()) {
+	if (optionals.size()) {
 		buf << std::endl;
 		buf << std::endl;
 		buf << "Available options:" << std::endl;
 
-		for (auto &p : opts_usage) {
-			buf << std::setw(30) << p.first << p.second << std::endl;
+		for (auto &optional : optionals) {
+			buf << std::setw(30) << optional.usage << optional.description << std::endl;
 		}
 	}
 
@@ -87,7 +62,7 @@ program_options program_options::parse(std::vector<std::string> const &args)
 
 	program_options opt;
 
-	opt.command_name = args[0];
+	opt.program = args[0];
 
 	// optional options
 	std::vector<std::string>::const_iterator i;
@@ -101,23 +76,24 @@ program_options program_options::parse(std::vector<std::string> const &args)
 		}
 
 		// find the descriptor for argument
-		auto di = optional_options_descriptor.find(arg.substr(2));
-		if (di == optional_options_descriptor.end()) {
+		auto desc = optional_option_descriptors.find(arg.substr(2));
+
+		if (desc == optional_option_descriptors.end()) {
 			throw bad_program_option("unknown option " + arg, arg);
 		}
 
-		// get arguments
+		// get argument's arguments
 		i++;
 
-		if (static_cast<std::size_t>(args.end() - i) < di->second.args.size()) {
+		if (static_cast<std::size_t>(args.end() - i) < desc->second.args.size()) {
 			throw bad_program_option("insufficient argument for " + arg, arg);
 		}
 
-		std::vector<std::string> args(i, i + di->second.args.size());
-		i += di->second.args.size();
+		std::vector<std::string> args(i, i + desc->second.args.size());
+		i += desc->second.args.size();
 
 		// process
-		di->second.parser(opt, args);
+		desc->second.parser(opt, args);
 	}
 
 	// project file
@@ -139,41 +115,4 @@ program_options program_options::parse(std::vector<std::string> const &args)
 	}
 
 	return opt;
-}
-
-void program_options::parse_platform(program_options & o, std::vector<std::string> const & args)
-{
-	o.platform = args[0];
-}
-
-static std::vector<std::pair<std::string, std::string>> get_optional_option_usage()
-{
-	std::vector<std::pair<std::string, std::string>> usages;
-
-	for (auto &e : optional_options_descriptor) {
-		auto &name = e.first;
-		auto &desc = e.second;
-		auto &args = desc.args;
-		std::stringstream usage;
-
-		// option name
-		usage << program_options::optional_prefix << name;
-
-		// option's arguments
-		std::vector<std::string> args_name;
-
-		std::transform(args.begin(), args.end(), std::back_inserter(args_name), [](optional_option_argument_descriptor const &arg)
-		{
-			auto name = arg.required ? arg.name : "[" + arg.name + "]";
-			return std::toupper(name.begin(), name.end());
-		});
-
-		if (args_name.size()) {
-			usage << " " << join(" ", args_name.begin(), args_name.end());
-		}
-
-		usages.push_back(std::make_pair(usage.str(), desc.description));
-	}
-
-	return usages;
 }

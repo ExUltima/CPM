@@ -18,6 +18,8 @@ cpm_SOURCES = \
 	option/commands.hpp \
 	option/errors.cpp \
 	option/errors.hpp \
+	option/optionals.cpp \
+	option/optionals.hpp \
 	option/options.cpp \
 	option/options.hpp \
 	program.cpp \
