@@ -24,6 +24,8 @@ cpm_SOURCES = \
 	option/options.hpp \
 	program.cpp \
 	program.hpp \
+	project/config.cpp \
+	project/config.hpp \
 	project_builder.cpp \
 	project_builder.hpp \
 	string.cpp \
